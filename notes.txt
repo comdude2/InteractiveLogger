@@ -1,0 +1,7 @@
+ScoreboardUI:
+	InteractiveLogger
+		RecordingID: xxxxxxxxx - 9 digits due to integer limitations and it shouldn't need to be more.
+		StartTime - <time> <random int> - due to objective?
+		EndTime - <time> <random int> ^^^^
+		CurrentTime - <time> <random int> ^^^^
+		CriteriaCount: x - How many events are being specifically searched for
