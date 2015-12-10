@@ -1,31 +1,39 @@
 package net.comdude2.plugins.interactivelogger.recording;
 
-import org.bukkit.event.Event;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import javax.annotation.Nullable;
 
 public class Record {
 
-    private org.bukkit.event.Event event;
+    private final String pName, eventName, mobName;
+    private final Location loc;
     private long timeStamp;
-    private static final HashSet<Class> accepted = new HashSet<Class>(Arrays.asList(org.bukkit.event.block.BlockBreakEvent.class));
 
-    private Record() {}
-
-    public static Record init(Event e) {
-        if(!accepted.contains(e.getClass())) {
-            Record rc = new Record();
-            rc.setEvent(e);
-            return rc;
-        }
-        return null;
+    public Record(@Nullable Entity ent, @javax.annotation.Nonnull Location l, @javax.annotation.Nonnull String eventName) {
+        this.pName = ent instanceof Player ? ((Player) ent).getPlayer().getName() : null;
+        this.mobName = ent instanceof Player ? null : ent.getName();
+        this.loc = l;
+        this.eventName = eventName;
     }
 
-    private void setEvent(Event e) {
-        this.event = e;
+    public Location getLoc() {
+        return this.loc;
     }
 
+    public String getEntityName() {
+        return this.isPlayer() ? pName : mobName;
+    }
+
+    public boolean isPlayer() {
+        return pName == null;
+    }
+
+    public String getName() {
+        return this.pName;
+    }
     public void provideTime(long timestamp) {
         this.timeStamp = timestamp;
     }
